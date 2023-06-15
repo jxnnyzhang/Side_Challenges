@@ -7,6 +7,7 @@ This repository contains a collection of small side challenges that I have compl
 The repository includes the following challenges:
 
 Challenge 1: [Smiley Playground - Ramp ios]
+
 Description: In this coding challenge, I successfully created a smiley face using SwiftUI. The challenge involved retrieving and parsing JSON data, structuring a SwiftUI view, and iteratively refining the design. Through this challenge, I demonstrated proficiency in SwiftUI and showcased my ability to create visually appealing designs using native SwiftUI views.
 
 
