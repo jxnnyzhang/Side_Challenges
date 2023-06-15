@@ -31,3 +31,122 @@ sort the data by each elements 'bar' key, filter out elements where 'baz' is not
 
 Do each of these steps to reveal the instructions for the final part. Remember to show your work!
 
+import Foundation
+import PlaygroundSupport
+
+let url = URL(string: "https://api.jsonbin.io/v3/b/646bed328e4aa6225ea22a79")!
+let accessKey = "$2b$10$Ke1iwieFO7/7qsSKU.GYU.oYXZMW1EeHrwd4xx9ylboJik5mstZk6"
+
+struct Item: Codable {
+    let foo: String
+    let bar: Int
+    let baz: Int
+}
+
+func downloadData(from url: URL, accessKey: String, completion: @escaping (Result<Data, Error>) -> Void) {
+    var request = URLRequest(url: url)
+    request.setValue(accessKey, forHTTPHeaderField: "X-Access-Key")
+
+    URLSession.shared.dataTask(with: request) { data, response, error in
+        if let error = error {
+            completion(.failure(error))
+            return
+        }
+
+        guard let data = data else {
+            completion(.failure(NSError(domain: "", code: 0, userInfo: nil)))
+            return
+        }
+
+        completion(.success(data))
+    }.resume()
+}
+
+downloadData(from: url, accessKey: accessKey) { result in
+    switch result {
+    case .success(let data):
+        do {
+            let jsonObject = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+            
+            guard let record = jsonObject?["record"] as? [String: Any],
+                  let dataArray = record["data"] as? [[String: Any]] else {
+                print("Failed to retrieve data from JSON")
+                return
+            }
+            
+            let items = try JSONSerialization.data(withJSONObject: dataArray, options: [])
+            let response = try JSONDecoder().decode([Item].self, from: items)
+            
+            // Sort the data by the 'bar' key
+            let sortedData = response.sorted(by: { $0.bar < $1.bar })
+            
+            // Filter out elements where 'baz' is not divisible by 3
+            let filteredData = sortedData.filter { $0.baz % 3 == 0 }
+            
+            // Concatenate each element's 'foo' value
+            let concatenatedString = filteredData.reduce("", { $0 + $1.foo })
+            
+            print("Decoded Message:", concatenatedString)
+        } catch {
+            print("Failed to decode JSON:", error)
+        }
+    case .failure(let error):
+        print("Failed to download data:", error)
+    }
+
+    PlaygroundPage.current.finishExecution()
+}
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+Challenge 3
+
+Get the prompt from Challenge 2 and paste it below. Solve the challenge, and take a screenshot of the rendered view. Include the screenshot of the view in your submission!
+
+Concatenated String: Nice Work! For the final challenge, update ContentView.body to display a smiley face using only native SwiftUI views (no Sf Symbols or emojis).
+
+import Foundation
+import SwiftUI
+import PlaygroundSupport
+
+struct ContentView: View {
+    var body: some View {
+        VStack(spacing: 30) {
+            ZStack {
+                //Make the face circle
+                Circle()
+                    .foregroundColor(.blue)
+                    .frame(width: 125, height: 125)
+                
+               //Make the first eye
+               Circle()
+                    .foregroundColor(.white)
+                    .frame(width: 25, height: 25)
+                    .offset(x: -25, y: -20)
+                
+                //Make the other eye
+                Circle()
+                    .foregroundColor(.white)
+                    .frame(width: 25, height: 25)
+                    .offset(x: 25, y: -20)
+                    
+                //Make the mouth
+                Path { path in
+                    path.move(to: CGPoint(x: -30, y: 20))
+                    path.addArc(center: CGPoint(x: 0, y: 20), radius: 30, startAngle: .degrees(180), endAngle: .degrees(0), clockwise: true)
+                }
+                .stroke(Color.white, lineWidth: 8)
+                .offset(x: 62, y: 50) // Adjust the offset values as needed
+            }
+        }
+    }
+}
+
+
+let contentView = ContentView()
+
+PlaygroundPage.current.liveView = UIHostingController(rootView: contentView)
+PlaygroundPage.current.needsIndefiniteExecution = true
+
+
+End of Challenge!
+
