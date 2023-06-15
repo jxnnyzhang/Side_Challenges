@@ -17,11 +17,11 @@ To explore the challenges and their solutions, follow these steps:
 
 1. Clone the repository to your local machine:
 
-git clone https://github.com/your-username/Side_Challenges.git
+        git clone https://github.com/your-username/Side_Challenges.git
 
 2. Navigate to the specific challenge directory:
 
-cd Side_Challenges/challenge-1
+        cd Side_Challenges/challenge-1
 
 3. Review the challenge description and solution files.
 
