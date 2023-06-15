@@ -2,6 +2,7 @@
 
 This repository contains a collection of small side challenges that I have completed. Each challenge focuses on a specific concept or problem and provides an opportunity to practice and showcase my coding skills.
 
+
 **Challenges**
 
 The repository includes the following challenges:
@@ -29,9 +30,11 @@ To explore the challenges and their solutions, follow these steps:
 
 Feel free to explore, learn from, and adapt the code provided in this repository for your own projects or learning purposes.
 
+
 **Contributing**
 
 If you have additional side challenges or improvements to existing solutions, contributions are welcome. Please fork the repository, make your changes, and submit a pull request with a brief explanation of your contribution.
+
 
 **Acknowledgements**
 
